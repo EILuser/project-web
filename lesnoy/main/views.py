@@ -7,6 +7,15 @@ from django.contrib import messages
 def main(request):
     return render(request, "index.html")
 
+def home(request):
+    return render(request, "test1.html")
+
+def home1(request):
+    return render(request, "test2.html")
+
+def home2(request):
+    return render(request, "test3.html")
+
 def login_view(request):
     if request.method == "POST":
         form = UserAuthentificationForm(request, data=request.POST)
@@ -29,6 +38,7 @@ def register_view(request):
             form.save()
             messages.success(request, "Регистрация прошла успешно. Сейчас вы можете войти в аккаунт")
             return redirect("../login")
+        messages.error(request, "Регистрация не удалась. Проверьте правильность заполнения полей")
     else:
         form = UserRegistrationForm()
     return render(request, "register.html", {"form": form})
