@@ -1,7 +1,7 @@
-from typing import Any
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from . import models
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
@@ -25,3 +25,8 @@ class UserAuthentificationForm(AuthenticationForm):
         self.fields["password"].widget.attrs.update({"class": "form-control", "id": "form_password"})
 
     required_css_class = "form-floating"
+
+class ComplaintForm(forms.ModelForm):
+    class Meta:
+        model = models.Complaints
+        fields = ["title", "house_address", "text"]

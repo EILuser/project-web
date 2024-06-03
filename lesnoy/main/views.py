@@ -1,20 +1,14 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm, UserAuthentificationForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from .forms import ComplaintForm
+from django import forms
+from django.contrib.auth.models import User
 
 def main(request):
     return render(request, "index.html")
-
-def home(request):
-    return render(request, "test1.html")
-
-def home1(request):
-    return render(request, "test2.html")
-
-def home2(request):
-    return render(request, "test3.html")
 
 def login_view(request):
     if request.method == "POST":
@@ -42,3 +36,15 @@ def register_view(request):
     else:
         form = UserRegistrationForm()
     return render(request, "register.html", {"form": form})
+
+def complaint_view(request, id):
+    if request.method == "POST":
+        form = ComplaintForm(request.POST)
+        form.fields["user"] = forms.ModelChoiceField(queryset=User.objects.get(id=id))
+        if form.is_valid():
+            form.save()
+            return redirect("..")
+        messages.error(request, "Ошибка в отправке жалобы. Проверьте правильность заполнения полей")
+    else:
+        form = ComplaintForm()
+    return render(request, "allcomplaints.html", {"form": form})

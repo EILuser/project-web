@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<html lang="ru">
 
 <head>
   <meta charset="UTF-8">
@@ -11,57 +11,93 @@
   <title>Управляющая компания ООО «Лесной»</title>
 </head>
 
-<body class="index">
-  <div id="main">
-    <div class="middle clearfix">
-      <div class="index-top">
-        <div class="main-slider-block">
-          <div class="main-slider">
-            <ul class="items">
-              <li class="item">
+<body>
+    <header>
+        <div class="center">
+            <div class="wrapper">
                 {% load static %}
-                <img src="{% static 'image/img_1.jpg' %}" alt="1">
-              </li>
-              <li class="item">
-                {% load static %}
-                <img src="{% static 'image/img_2.jpg' %}" alt="2">
-              </li>
-              <li class="item">
-                {% load static %}
-                <img src="{% static 'image/img_3.jpg' %}" alt="3">
-              </li>
-              <li class="item">
-                {% load static %}
-                <img src="{% static 'image/img_4.jpg' %}" alt="4">
-              </li>
-              <li class="item">
-                {% load static %}
-                <img src="{% static 'image/img_5.jpeg' %}" alt="5">
-              </li>
-            </ul>
-          </div>
+                <img src="{% static 'image/logo.png' %}" class="logo" alt="Управляющая компания">
+                <nav>
+                    <ul class="ul__nav">
+                      <li>
+                        <a href="#about_company">О компании</a>
+                      </li>
+                      <li>
+                        <a href="/disclosure/">Раскрытие информации</a>
+                      </li>
+                      <li>
+                        <a href="/houses/">Наши дома</a>
+                      </li>
+                      <li>
+                        <a href="/news/">Новости</a>
+                      </li>
+                      <li>
+                        <a href="#contacts">Контакты</a>
+                      </li>
+                    </ul>
+                </nav>
 
-          <div class="main-options">
-            <a href="#" class=" i1"><span>Передать показания счётчика</span></a>
-            <a href="#" class=" i2"><span>Отправить жалобу</span></a>
-            <a href="#" class=" i3"><span>Написать управляющему</span></a>
-          </div>
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">Выйти</button>
+                </form>
+                {% else %}
+                <div class="authorisation">
+                  <a href="{% url 'login' %}" class="btn btn-warning">Войти</a>
+                  <a href="{% url 'registration' %}" class="btn btn-warning">Регистрация</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    {% block content %}
+
+    <main>
+        <div class="main-slider-block">
+            <ul class="items">
+                <li class="item">
+                  {% load static %}
+                  <img src="{% static 'image/img_1.jpg' %}" alt="1">
+                </li>
+                <li class="item">
+                  {% load static %}
+                  <img src="{% static 'image/img_2.jpg' %}" alt="2">
+                </li>
+                <li class="item">
+                  {% load static %}
+                  <img src="{% static 'image/img_3.jpg' %}" alt="3">
+                </li>
+                <li class="item">
+                  {% load static %}
+                  <img src="{% static 'image/img_4.jpg' %}" alt="4">
+                </li>
+                <li class="item">
+                  {% load static %}
+                  <img src="{% static 'image/img_5.jpeg' %}" alt="5">
+                </li>
+            </ul>
+            <div class="main-options">
+                <a href="#">Передать показания счётчика</a>
+                <a href="{% url 'complaints' user.id %}"> <span style="position: absolute; color:transparent;">{{ user }}</span> Отправить жалобу </a>
+                <a href="#">Написать управляющему</a>
+            </div>
         </div>
 
-
         <ol class="main-features">
-          <li id="bx_651765591_885">Управление эксплуатацией жилого и нежилого фондов</li>
-          <li id="bx_651765591_886">Уборка и благоустройство территорий</li>
-          <li id="bx_651765591_887">обслуживание и ремонт жилищного фонда и инжереных систем</li>
-          <li id="bx_651765591_890">Услуги электрика, сантехника</li>
-          <li id="bx_651765591_888">Услуги консьержа и охраны</li>
+            <li >Управление эксплуатацией жилого и нежилого фондов</li>
+            <li>Уборка и благоустройство территорий</li>
+            <li>обслуживание и ремонт жилищного фонда и инжереных систем</li>
+            <li>Услуги электрика, сантехника</li>
+            <li>Услуги консьержа и охраны</li>
         </ol>
-      </div>
+    </main>
 
-      <div class="center" id="about_company">
-        <div class="content">
-          <div class="main-text-block">
-            <h1>Управляющая компания ООО «Лесной»</h1>
+    <section>
+        <h1 class="section__title">Управляющая компания ООО «Лесной»</h1>
+
+        <div class="section__content" id="about_company">
             <p>
               В управлении нашей компании находится 1 миллион квадратных метров жилищного фонда, включающего
               многоквартирные дома, офисно-торговые здания, встроенные, коммерческие помещения.
@@ -74,159 +110,43 @@
               «Лесной» реализует эффективное и грамотное управление жилищным фондом, а также обеспечивает комфорт и
               безопасность проживания людей на территории жилых комплексов.
             </p>
-          </div>
-
-          <div class="main-news-block">
-            <h2><a href="/news/">Новости</a></h2>
-            <ul class="main-news">
-              <li class="item" id="bx_1373509569_6801">
-                <div class="date">12 января 2018</div>
-                <div class="text">
-                  <a href="/news/otkryta-zapis-na-zaselenie-doma-po-adresu-g-moskva-varshavskoe-shosse-d-141-k-9/">Открыта
-                    запись на заселение дома по адресу: г. Москва, Варшавское шоссе, д. 141, к. 9</a>
-                </div>
-              </li>
-              <li class="item" id="bx_1373509569_6802">
-                <div class="date">13 декабря 2017</div>
-                <div class="text">
-                  <a href="/news/vazhnost-kvalifitsirovannoy-ekspluatatsii-sistem-protivopozharnoy-bezopasnosti/">Важность
-                    квалифицированной эксплуатации систем противопожарной безопасности</a>
-                </div>
-              </li>
-              <li class="item" id="bx_1373509569_6803">
-                <div class="date">8 ноября 2017</div>
-                <div class="text">
-                  <a href="/news/nachinaetsya-zapis-na-zaselenie-doma-po-adresu-d-bobrovo-ul-lesnaya-d-18/">Начинается
-                    запись на заселение дома по адресу: д. Боброво, ул. Лесная, д. 18</a>
-                </div>
-              </li>
+        </div>
+        
+        <div class="section__news">
+            <a href="#" class="section__news__title">Новости</a>
+            <ul class="section__news">
+                <li class="news__item">
+                    <p class="date">12 января 2018</p>
+                    <p class="content">Открыта запись на заселение дома по адресу: г. Москва, Варшавское шоссе, д. 141, к. 9</p>
+                  </li>
+                  <li class="news__item">
+                    <p class="date">13 декабря 2017</p>
+                    <p class="content">Важность квалифицированной эксплуатации систем противопожарной безопасности</p>
+                  </li>
+                  <li class="news__item">
+                    <p class="date">8 ноября 2017</p>
+                    <p class="content">Начинается запись на заселение дома по адресу: д. Боброво, ул. Лесная, д. 18</p>
+                  </li>
             </ul>
-          </div>
         </div>
+    </section>
 
-        <script type="text/javascript">
-          var streets = [{ 'NAME': 'г. Екатеринбург, ул. Василевского', 'ITEMS': [{ 'ID': '942', 'NAME': 'д. 76', 'LINK': '/houses/vasilevskogo_76/' }] }, { 'NAME': 'г. Екатеринбург, пр-кт. Краснопольский', 'ITEMS': [{ 'ID': '6799', 'NAME': 'д. 14', 'LINK': '/houses/g_chelyabinsk_pr_kt_krasnopolskij_14/' }, { 'ID': '6798', 'NAME': 'д. 16', 'LINK': '/houses/g_chelyabinsk_pr_kt_krasnopolskij_16/' }] }, { 'NAME': 'г. Екатеринбург, ш. Копейское', 'ITEMS': [{ 'ID': '6800', 'NAME': 'д. 39Б', 'LINK': '/houses/g_chelyabinsk_sh_kopejskoe_39b/' }] }, { 'NAME': 'г. Екатеринбург, ул. Дзержинского', 'ITEMS': [{ 'ID': '920', 'NAME': 'д. 82', 'LINK': '/houses/dzerzhinskogo_82/' }, { 'ID': '1092', 'NAME': 'д. 84', 'LINK': '/houses/dzerzhinskogo_84/' }] }, { 'NAME': 'г. Екатеринбург, ул. Магнитогорская', 'ITEMS': [{ 'ID': '1048', 'NAME': 'д. 89', 'LINK': '/houses/magnitogorskaya_89/' }, { 'ID': '977', 'NAME': 'д. 91', 'LINK': '/houses/magnitogorskaya_91/' }] }, { 'NAME': 'г. Екатеринбург, ул. Ереванская', 'ITEMS': [{ 'ID': '6325', 'NAME': 'д. 51', 'LINK': '/houses/ul_erevanskaya_51/' }] }, { 'NAME': 'г. Екатеринбург, ул. Новороссийская', 'ITEMS': [{ 'ID': '6245', 'NAME': 'д. 118', 'LINK': '/houses/ul_novorossijskaya_118/' }] }, { 'NAME': 'г. Екатеринбург, ул. Хохрякова', 'ITEMS': [{ 'ID': '1024', 'NAME': 'д. 24А', 'LINK': '/houses/hohryakova_24a/' }] }, { 'NAME': 'г. Екатеринбург, ул. Эльтонская 2-я', 'ITEMS': [{ 'ID': '1143', 'NAME': 'д. 32', 'LINK': '/houses/eltonskaya_2_ya_32/' }] }, { 'NAME': 'г. Екатеринбург, пер. Энергетиков', 'ITEMS': [{ 'ID': '1121', 'NAME': 'д. 6', 'LINK': '/houses/energetikov_6/' }] }, { 'NAME': 'г. Екатеринбург, ул. Яблочкина', 'ITEMS': [{ 'ID': '1002', 'NAME': 'д. 3', 'LINK': '/houses/yablochkina_3/' }] }];
-        </script>
+    {% endblock %}
 
-        <div class="sidebar">
-          <form method="GET" class="main-box form c1">
-            <h3>Узнайте информацию по вашему дому</h3>
-
-            <div class="field">
-              <label for="info-street" class="label">Укажите улицу:</label>
-              <select class="form-element" id="info-street" name="STREET_ID">
-                <option value="0">г. Екатеринбург, ул. Бажова</option>
-                <option value="1">г. Екатеринбург, ул. Тверитина</option>
-                <option value="2">г. Екатеринбург, ул. Белинского</option>
-                <option value="3">г. Екатеринбург, ул. Дзержинского</option>
-                <option value="4">г. Екатеринбург, ул. Восточная</option>
-                <option value="5">г. Екатеринбург, ул. Кузнечная</option>
-                <option value="6">г. Екатеринбург, ул. Декабристов</option>
-                <option value="7">г. Екатеринбург, ул. Хохрякова</option>
-                <option value="8">г. Екатеринбург, ул. Малышева</option>
-                <option value="9">г. Екатеринбург, ул. Энергетиков</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="info-house" class="label">Укажите дом:</label>
-              <select class="form-element" id="info-house" name="HOUSE_ID">
-                <option value="10">д. 76</option>
-                <option value="11">д. 8</option>
-                <option value="12">д. 24</option>
-                <option value="13">д. 52</option>
-                <option value="14">д. 11</option>
-                <option value="15">д. 35</option>
-                <option value="16">д. 48</option>
-                <option value="17">д. 91</option>
-              </select>
-            </div>
-
-            <div class="controlls"><input type="submit" value="Узнать" class="btn"></div>
-          </form>
-        </div>
-      </div><!-- end center -->
-
-      <script>
-        var script = document.createElement('script');
-        script.src = 'https://api-maps.yandex.ru/2.1/?load=package.full&mode=release&lang=ru-RU&wizard=bitrix';
-        (document.head || document.documentElement).appendChild(script);
-        script.onload = function () {
-          this.parentNode.removeChild(script);
-        };
-      </script>
-
-      <script>
-        window.HOUSES_MAP_LANG = {
-          'T_OPEN_IN_NEW_WINDOW': 'Открыть в новом окне'
-        };
-      </script>
-
-    </div><!-- end middle -->
-
-    <div class="header">
-      <div class="center">
+    <footer>
         <div class="wrapper">
-          <div id="logo">
-            {% load static %}
-            <img alt="Управляющая компания" src="{% static 'image/logo.png' %}"
-              title="whatAsoft: Управляющая компания, ТСЖ, ЖСК">
-          </div>
+            <p class="copy box">
+                © УК «Лесной» — 2024
+            </p>
 
-          <nav class="top-nav-block main-box c1 tr-angle">
-
-            <ul class="main-nav nav">
-              <li class="">
-                <a href="#about_company">О компании</a>
-              </li>
-              <li class="">
-                <a href="/disclosure/">Раскрытие информации</a>
-              </li>
-              <li class="">
-                <a href="/houses/">Наши дома</a>
-              </li>
-              <li class="">
-                <a href="/news/">Новости</a>
-              </li>
-              <li class="">
-                <a href="#contacts">Контакты</a>
-              </li>
-            </ul>
-          </nav>
-          {% if user.is_authenticated %}
-          <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Выйти</button>
-          </form>
-          {% else %}
-          <div class="authorisation">
-            <a href="{% url 'login' %}" class="btn btn-success">Войти</a>
-            <a href="{% url 'registration' %}" class="btn btn-success">Регистрация</a>
-          </div>
-          {% endif %}
+            <div class="all_contacts" id="contacts">
+                <p class="contact">8 800 200 2222</p>
+                <p>Контактный телефон</p>
+                <p class="contact">main@mc.lesnoy.ru</p>
+                <p>Электронная почта</p>
+                <p class="contact">https://t.me/lesnoymc</p>
+                <p>Телеграм канал</p>
+                </div>
         </div>
-      </div>
-    </div>
-
-    <div class="footer">
-      <div class="center">
-        <div class="wrapper">
-          <div class="copy main-box c1">
-            © УК «Лесной» — 2024
-          </div>
-
-          <div class="all_contacts" id="contacts">
-            <p class="contact">8 800 200 2222</p>
-            <p>Контактный телефон</p>
-            <p class="contact">main@mc.lesnoy.ru</p>
-            <p>Электронная почта</p>
-            <p class="contact">https://t.me/lesnoymc</p>
-            <p>Телеграм канал</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
+    </footer>
 </body>
-
-</html>
