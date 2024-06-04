@@ -6,10 +6,10 @@ class Complaints(models.Model):
     class Meta:
         db_table = "complaints"
 
-    title = models.CharField(max_length=40, help_text="Введите тему жалобы", default="Жалоба")
+    title = models.CharField(max_length=40, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    house_address = models.CharField(max_length=40, help_text="Введите адрес дома, в котором проживаете", default="Адрес")
-    text = models.TextField(max_length=1000, help_text="Оставьте свою жалобу", default="Текст жалобы")
+    house_address = models.CharField(max_length=40, null=True)
+    text = models.TextField(max_length=1000, null=True)
 
     def get_absolute_url(self):
         return reverse("complaints-detail", args=[str(self.id)])

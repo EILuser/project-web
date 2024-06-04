@@ -7,10 +7,10 @@
     <title>Регистрация</title>
 </head>
 <body class="text-center" style="background-color: #fafafa;">
-    <a href=".." class="btn btn-primary btm-sm mt-2 position-absolute top-0 start-0 ms-2">Главная страница</a>
-    <main class="container d-flex flex-column align-itmes-center" style="margin: 30px auto;">
+    <a href="{% url 'home_page' %}" class="btn btn-primary btm-sm mt-2 position-absolute top-0 start-0 ms-2">Главная страница</a>
+    <main class="container d-flex flex-column align-itmes-center" style="margin: 20px auto;">
         {% load static %}
-        <img src="{% static 'image/logo.png' %}" alt="Логотип" class="col align-self-center mb-2" width="170" height="130">
+        <img src="{% static 'image/logo.png' %}" alt="Логотип" class="col align-self-center mb-2" width="140" height="100">
 
         <form method="post" class="col align-self-center w-25">
             {% csrf_token %}
@@ -35,7 +35,7 @@
 
             {% if messages %}
             {% for message in messages %}
-            <p style="color: red; font-size: 15px;">{{ message }}</p>
+            <div class="alert alert-danger mt-2" style="text-align: center;">{{ message }}</div>
             {% endfor %}
             {% else %}
             <br>

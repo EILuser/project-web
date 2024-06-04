@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+
+{% block content %}
+<section class="pb-3 pt-3">
+    <div class="container d-flex flex-column align-items-center">
+        <h1 class="col mb-3">Форма отправки жалобы</h1>
+        <form method="post" class="col d-flex flex-column w-50">
+            {% csrf_token %}
+            
+            <div class="form_floating mb-2">
+                <label for="form_title">Тема:</label>
+                {{ form.title }}
+            </div>
+            <div class="form_floating mb-2">
+                <label for="form_address">Адрес проживания:</label>
+                {{ form.house_address }}
+            </div>
+            <div class="form_floating mb-2">
+                <label for="form_title">Текст жалобы:</label>
+                {{ form.text }}
+            </div>
+            
+            {% if messages %}
+
+            {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+            {% else %}
+            <div class="alert alert-danger" style="text-align: center;">{{ message }}</div>
+            {% endif %}
+            {% endfor %}
+            
+            {% endif %}
+
+            <button class="btn btn-primary mt-3 w-50" style="margin: 0 auto">Оправить</button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

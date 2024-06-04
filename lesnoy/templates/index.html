@@ -5,148 +5,165 @@
   <meta charset="UTF-8">
   <meta name="keywords" content="жкх, управляющая компания, Лесной">
   <meta name="description" content="Официальный сайт управляющей компании ООО «Лесной»">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <title>Управляющая компания ООО «Лесной»</title>
 </head>
 
 <body>
-    <header>
-        <div class="center">
-            <div class="wrapper">
-                {% load static %}
-                <img src="{% static 'image/logo.png' %}" class="logo" alt="Управляющая компания">
-                <nav>
-                    <ul class="ul__nav">
-                      <li>
-                        <a href="#about_company">О компании</a>
-                      </li>
-                      <li>
-                        <a href="/disclosure/">Раскрытие информации</a>
-                      </li>
-                      <li>
-                        <a href="/houses/">Наши дома</a>
-                      </li>
-                      <li>
-                        <a href="/news/">Новости</a>
-                      </li>
-                      <li>
-                        <a href="#contacts">Контакты</a>
-                      </li>
-                    </ul>
-                </nav>
+  <header>
+    <div class="center">
+      <div class="wrapper">
+        <a href="{% url 'home_page' %}">
+          {% load static %}
+          <img src="{% static 'image/logo.png' %}" class="logo" alt="Управляющая компания">
+        </a>
+        <nav>
+          <ul class="ul__nav">
+            <li>
+              <a href="http://127.0.0.1:8000/#about_company">О компании</a>
+            </li>
+            <li>
+              <a href="/disclosure/">Раскрытие информации</a>
+            </li>
+            <li>
+              {% if user.is_authenticated %}
+              <a href="{% url 'complaints' %}">Жалобы</a>
+              {% else %}
+              <a href="{% url 'login' %}">Жалобы</a>
+              {% endif %}
+            </li>
+            <li>
+              <a href="/news/">Новости</a>
+            </li>
+            <li>
+              <a href="http://127.0.0.1:8000/#contacts">Контакты</a>
+            </li>
+          </ul>
+        </nav>
 
-                {% if user.is_authenticated %}
-                <form method="post" action="{% url 'logout' %}">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-danger">Выйти</button>
-                </form>
-                {% else %}
-                <div class="authorisation">
-                  <a href="{% url 'login' %}" class="btn btn-warning">Войти</a>
-                  <a href="{% url 'registration' %}" class="btn btn-warning">Регистрация</a>
-                </div>
-                {% endif %}
-            </div>
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Выйти</button>
+        </form>
+        {% else %}
+        <div class="authorisation">
+          <a href="{% url 'login' %}" class="btn btn-warning">Войти</a>
+          <a href="{% url 'registration' %}" class="btn btn-warning">Регистрация</a>
         </div>
-    </header>
+        {% endif %}
+      </div>
+    </div>
+  </header>
 
-    {% block content %}
+  {% block content %}
 
-    <main>
-        <div class="main-slider-block">
-            <ul class="items">
-                <li class="item">
-                  {% load static %}
-                  <img src="{% static 'image/img_1.jpg' %}" alt="1">
-                </li>
-                <li class="item">
-                  {% load static %}
-                  <img src="{% static 'image/img_2.jpg' %}" alt="2">
-                </li>
-                <li class="item">
-                  {% load static %}
-                  <img src="{% static 'image/img_3.jpg' %}" alt="3">
-                </li>
-                <li class="item">
-                  {% load static %}
-                  <img src="{% static 'image/img_4.jpg' %}" alt="4">
-                </li>
-                <li class="item">
-                  {% load static %}
-                  <img src="{% static 'image/img_5.jpeg' %}" alt="5">
-                </li>
-            </ul>
-            <div class="main-options">
-                <a href="#">Передать показания счётчика</a>
-                <a href="{% url 'complaints' user.id %}"> <span style="position: absolute; color:transparent;">{{ user }}</span> Отправить жалобу </a>
-                <a href="#">Написать управляющему</a>
-            </div>
-        </div>
+  <main class="main">
+    <div class="main-slider-block">
+      <ul class="items">
+        <li class="item">
+          {% load static %}
+          <img src="{% static 'image/img_1.jpg' %}" alt="1">
+        </li>
+        <li class="item">
+          {% load static %}
+          <img src="{% static 'image/img_2.jpg' %}" alt="2">
+        </li>
+        <li class="item">
+          {% load static %}
+          <img src="{% static 'image/img_3.jpg' %}" alt="3">
+        </li>
+        <li class="item">
+          {% load static %}
+          <img src="{% static 'image/img_4.jpg' %}" alt="4">
+        </li>
+        <li class="item">
+          {% load static %}
+          <img src="{% static 'image/img_5.jpeg' %}" alt="5">
+        </li>
+      </ul>
+      {% if user.is_authenticated %}
+      <div class="main-options">
+        <a href="#">Передать показания счётчика</a>
+        <a href="{% url 'add_complaints' user.id %}"> <span style="position: absolute; color:transparent;">{{ user }}</span>
+          Отправить жалобу </a>
+        <a href="#">Написать управляющему</a>
+      </div>
+      {% else %}
+      <div class="main-options">
+        <a href="{% url 'login' %}">Передать показания счётчика</a>
+        <a href="{% url 'login' %}"> <span style="position: absolute; color:transparent;">{{ user }}</span> Отправить
+          жалобу </a>
+        <a href="{% url 'login' %}">Написать управляющему</a>
+      </div>
+      {% endif %}
+    </div>
 
-        <ol class="main-features">
-            <li >Управление эксплуатацией жилого и нежилого фондов</li>
-            <li>Уборка и благоустройство территорий</li>
-            <li>обслуживание и ремонт жилищного фонда и инжереных систем</li>
-            <li>Услуги электрика, сантехника</li>
-            <li>Услуги консьержа и охраны</li>
-        </ol>
-    </main>
+    <ol class="main-features">
+      <li>Управление эксплуатацией жилого и нежилого фондов</li>
+      <li>Уборка и благоустройство территорий</li>
+      <li>обслуживание и ремонт жилищного фонда и инжереных систем</li>
+      <li>Услуги электрика, сантехника</li>
+      <li>Услуги консьержа и охраны</li>
+    </ol>
+  </main>
 
-    <section>
-        <h1 class="section__title">Управляющая компания ООО «Лесной»</h1>
+  <section>
+    <h1 class="section__title" id="about_company">Управляющая компания ООО «Лесной»</h1>
 
-        <div class="section__content" id="about_company">
-            <p>
-              В управлении нашей компании находится 1 миллион квадратных метров жилищного фонда, включающего
-              многоквартирные дома, офисно-торговые здания, встроенные, коммерческие помещения.
-            </p>
-            <p>
-              В состав жилищного фонда входят современные жилые комплексы, поселки комплексной малоэтажной застройки,
-              отдельно стоящие дома бизнес-класса.
-            </p>
-            <p>
-              «Лесной» реализует эффективное и грамотное управление жилищным фондом, а также обеспечивает комфорт и
-              безопасность проживания людей на территории жилых комплексов.
-            </p>
-        </div>
-        
-        <div class="section__news">
-            <a href="#" class="section__news__title">Новости</a>
-            <ul class="section__news">
-                <li class="news__item">
-                    <p class="date">12 января 2018</p>
-                    <p class="content">Открыта запись на заселение дома по адресу: г. Москва, Варшавское шоссе, д. 141, к. 9</p>
-                  </li>
-                  <li class="news__item">
-                    <p class="date">13 декабря 2017</p>
-                    <p class="content">Важность квалифицированной эксплуатации систем противопожарной безопасности</p>
-                  </li>
-                  <li class="news__item">
-                    <p class="date">8 ноября 2017</p>
-                    <p class="content">Начинается запись на заселение дома по адресу: д. Боброво, ул. Лесная, д. 18</p>
-                  </li>
-            </ul>
-        </div>
-    </section>
+    <div class="section__content">
+      <p>
+        В управлении нашей компании находится 1 миллион квадратных метров жилищного фонда, включающего
+        многоквартирные дома, офисно-торговые здания, встроенные, коммерческие помещения.
+      </p>
+      <p>
+        В состав жилищного фонда входят современные жилые комплексы, поселки комплексной малоэтажной застройки,
+        отдельно стоящие дома бизнес-класса.
+      </p>
+      <p>
+        «Лесной» реализует эффективное и грамотное управление жилищным фондом, а также обеспечивает комфорт и
+        безопасность проживания людей на территории жилых комплексов.
+      </p>
+    </div>
 
-    {% endblock %}
+    <div class="section__news">
+      <a href="#" class="section__news__title">Новости</a>
+      <ul class="section__news">
+        <li class="news__item">
+          <p class="date">12 января 2018</p>
+          <p class="content">Открыта запись на заселение дома по адресу: г. Москва, Варшавское шоссе, д. 141, к. 9</p>
+        </li>
+        <li class="news__item">
+          <p class="date">13 декабря 2017</p>
+          <p class="content">Важность квалифицированной эксплуатации систем противопожарной безопасности</p>
+        </li>
+        <li class="news__item">
+          <p class="date">8 ноября 2017</p>
+          <p class="content">Начинается запись на заселение дома по адресу: д. Боброво, ул. Лесная, д. 18</p>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-    <footer>
-        <div class="wrapper">
-            <p class="copy box">
-                © УК «Лесной» — 2024
-            </p>
+  {% endblock %}
 
-            <div class="all_contacts" id="contacts">
-                <p class="contact">8 800 200 2222</p>
-                <p>Контактный телефон</p>
-                <p class="contact">main@mc.lesnoy.ru</p>
-                <p>Электронная почта</p>
-                <p class="contact">https://t.me/lesnoymc</p>
-                <p>Телеграм канал</p>
-                </div>
-        </div>
-    </footer>
+  <footer>
+    <div class="wrapper">
+      <p class="copy box">
+        © УК «Лесной» — 2024
+      </p>
+
+      <div class="all_contacts" id="contacts">
+        <p class="contact">8 800 200 2222</p>
+        <p>Контактный телефон</p>
+        <p class="contact">main@mc.lesnoy.ru</p>
+        <p>Электронная почта</p>
+        <p class="contact">https://t.me/lesnoymc</p>
+        <p>Телеграм канал</p>
+      </div>
+    </div>
+  </footer>
 </body>
