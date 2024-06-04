@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm, UserAuthentificationForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -18,6 +17,10 @@ def my_complaints(request, user_id):
     user = get_object_or_404(User, id=user_id)
     my_comps = models.Complaints.objects.filter(user_id=user.id)
     return render(request, "my_complaints.html", {"complaints": my_comps})
+
+def news(request):
+    news_list = models.News.objects.all().order_by("publish_date")
+    return render(request, "news.html", {"news": news_list})
 
 def login_view(request):
     if request.method == "POST":

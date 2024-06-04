@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<section>
+    <div class="container pt-4 pb-5">
+        <h1 class="mb-4 mt-4" style="text-align: center;">Новости</h1>
+        {% if news %}
+        {% for publication in news %}
+        <div class="card w-50 mb-4" style="border-color: #ffcb3f; border-width: 5px; margin: 0 auto;">
+            <img src="../main/static/image/images.jpg" class="card-img-top" alt="Картинка">
+            <div class="card-body">
+              <h5 class="card-title">{{ publication.title }}</h5>
+              <p class="card-text">{{ publication.content }}</p>
+            </div>
+          </div>
+        {% endfor %}
+        {% else %}
+        <div class="alert alert-info w-25" style="margin: 0 auto;">Новости отсутствуют</div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

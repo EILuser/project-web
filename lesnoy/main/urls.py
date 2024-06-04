@@ -15,4 +15,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='..'), name='logout'),
     path('add_complaints/<int:id>', views.add_complaint_view, name="add_complaints"),
     path('complaints/', include(complaints_patterns)),
+    path('news/', views.news, name="news"),
 ]

@@ -20,8 +20,8 @@ class UserAuthentificationForm(AuthenticationForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["username"].widget.attrs.update({"class": "form-control", "id": "form_username"})
-        self.fields["password"].widget.attrs.update({"class": "form-control", "id": "form_password"})
+        for field in self.fields.values():
+            field.widget.attrs.update({"class": "form-control", "id": f"form_{field}"})
 
 
 class ComplaintForm(forms.Form):

@@ -36,7 +36,7 @@
               {% endif %}
             </li>
             <li>
-              <a href="/news/">Новости</a>
+              <a href="{% url 'news' %}">Новости</a>
             </li>
             <li>
               <a href="http://127.0.0.1:8000/#contacts">Контакты</a>
@@ -130,7 +130,7 @@
     </div>
 
     <div class="section__news">
-      <a href="#" class="section__news__title">Новости</a>
+      <a href="{% url 'news' %}" class="section__news__title">Новости</a>
       <ul class="section__news">
         <li class="news__item">
           <p class="date">12 января 2018</p>
