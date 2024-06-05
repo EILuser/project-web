@@ -3,22 +3,25 @@
 {% block content %}
 
 <section>
-    <div class="container pt-4 pb-5">
-        <h1 class="mb-4 mt-4" style="text-align: center;">Новости</h1>
-        {% if news %}
-        {% for publication in news %}
-        <div class="card w-50 mb-4" style="border-color: #ffcb3f; border-width: 5px; margin: 0 auto;">
-            <img src="../main/static/image/images.jpg" class="card-img-top" alt="Картинка">
-            <div class="card-body">
-              <h5 class="card-title">{{ publication.title }}</h5>
-              <p class="card-text">{{ publication.content }}</p>
-            </div>
-          </div>
-        {% endfor %}
-        {% else %}
-        <div class="alert alert-info w-25" style="margin: 0 auto;">Новости отсутствуют</div>
-        {% endif %}
+  <div class="container pt-4 pb-5">
+    <h1 class="mb-4 mt-4 text-center">Новости</h1>
+    <div class="container shadow-sm p-3 mb-5 bg-white rounded" style="max-height: 1200px; overflow: auto;">
+      {% if news %}
+      {% for publication in news %}
+      <div class="card w-50 mb-4" style="border-color: #ffcb3f; border-width: 2px; margin: 0 auto;">
+        <img src="{{ publication.image.url }}" class="card-img-top" alt="Картинка" width="200" height="350">
+        <div class="card-body">
+          <h5 class="card-title">{{ publication.title }}</h5>
+          <p class="text-muted" style="font-size: 14px;">{{ publication.publish_date }}</p>
+          <p class="card-text" style="text-align: justify;">{{ publication.content }}</p>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="alert alert-info w-25" style="margin: 0 auto;">Новости отсутствуют</div>
+      {% endif %}
     </div>
+  </div>
 </section>
 
 {% endblock %}

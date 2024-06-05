@@ -1,26 +1,30 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from .forms import UserRegistrationForm, UserAuthentificationForm
+from .forms import UserRegistrationForm, UserAuthentificationForm, SendMessageForm, ComplaintForm, SendReplyForm, SendMeterReadingsForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .forms import ComplaintForm
 from . import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
-def main(request):
-    return render(request, "index.html")
+def main_view(request):
+    news_list = models.News.objects.all().order_by("-publish_date")[:3]
+    return render(request, "index.html", {"latest_news": news_list})
 
-def all_complaints(request):
-    comps = models.Complaints.objects.all()
-    return render(request, "complaints.html", {"complaints": comps})
+def all_complaints_view(request):
+    complaints = models.Complaints.objects.all().order_by("-post_date")
+    return render(request, "complaints.html", {"complaints": complaints})
 
-def my_complaints(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    my_comps = models.Complaints.objects.filter(user_id=user.id)
+def my_complaints_view(request):
+    my_comps = models.Complaints.objects.filter(user_id=request.user.id)
     return render(request, "my_complaints.html", {"complaints": my_comps})
 
-def news(request):
-    news_list = models.News.objects.all().order_by("publish_date")
+def news_view(request):
+    news_list = models.News.objects.all().order_by("-publish_date")
     return render(request, "news.html", {"news": news_list})
+
+def messages_view(request):
+    messages = models.Messages.objects.all().order_by("-send_date")
+    return render(request, "messages.html", {"messages": messages})
 
 def login_view(request):
     if request.method == "POST":
@@ -49,21 +53,72 @@ def register_view(request):
         form = UserRegistrationForm()
     return render(request, "register.html", {"form": form})
 
-def add_complaint_view(request, id):
-    user = get_object_or_404(User, id=id)
+def add_complaint_view(request):
     if request.method == "POST":
         form = ComplaintForm(request.POST)
         if form.is_valid():
-            table_field = models.Complaints(
+            complaint = models.Complaints(
                 title=form.cleaned_data["title"],
-                user_id=user.id,
+                user_id=request.user.id,
                 house_address=form.cleaned_data["house_address"],
-                text=form.cleaned_data["text"]
+                text=form.cleaned_data["text"],
+                post_date=datetime.now().date()
             )
-            table_field.save()
+            complaint.save()
             messages.success(request, "Жалоба отправлена успешно")
-            return redirect(f"./{id}")
+            return redirect(f"./{request.user_id}")
         messages.error(request, "Отправка формы не удалась. Проверьте правильность заполнения полей")
     else:
         form = ComplaintForm()
-    return render(request, "send_complaints.html", {"form": form})
+    return render(request, "send_complaint.html", {"form": form})
+
+def send_message_view(request):
+    if request.method == "POST":
+        form = SendMessageForm(request.POST)
+        if form.is_valid():
+            message = models.Messages(
+                user_id=request.user.id,
+                send_date=datetime.now().date(),
+                title=form.cleaned_data["title"],
+                question_text=form.cleaned_data["text"],
+                is_read=False
+            )
+            message.save()
+            messages.success(request, "Сообщение успешно отправлено")
+            return redirect(f"./{request.user_id}")
+        messages.error(request, "Сообщение не отправлено. Проверьте правильность заполнения полей")
+    else:
+        form = SendMessageForm()
+    return render(request, "send_message.html", {"form": form})
+
+def make_read_view(request, message_id):
+    models.Messages.objects.filter(id=message_id).update(is_read=True)
+    return redirect("..")
+
+def delete_message_view(request, message_id):
+    models.Messages.objects.filter(id=message_id).delete()
+    return redirect("..")
+
+def send_reply_view(request):
+    pass
+
+def send_meter_readings_view(request):
+    if request.method == "POST":
+        form = SendMeterReadingsForm(request.POST)
+        if form.is_valid():
+            meter_readings = models.MeterReadings(
+                user_id=request.user.id,
+                send_date=datetime.now().date(),
+                personal_account=form.cleaned_data["personal_account"],
+                hot_watter_supply=form.cleaned_data["hot_watter_supply"],
+                cold_watter_supply=form.cleaned_data["cold_watter_supply"],
+                gas_supply=form.cleaned_data["gas_supply"],
+                electricity_supply=form.cleaned_data["electricity_supply"]
+            )
+            meter_readings.save()
+            messages.success(request, "Отправка показаний прошла успешно")
+            return redirect(".")
+        messages.error(request, "Показания не отправились. Проверьте правильность заполнения полей")
+    else:
+        form = SendMeterReadingsForm()
+    return render(request, "send_meterreadings.html", {"form": form})

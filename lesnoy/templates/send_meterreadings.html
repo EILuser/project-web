@@ -1,0 +1,48 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<section class="pt-3 pb-3">
+    <div class="container d-flex flex-column align-items-center">
+        <h1 class="col mb-5">Передача показаний</h1>
+        <form method="post" class="col d-flex flex-column w-50">
+            {% csrf_token %}
+
+            <div class="form-floating mb-4">
+                {{ form.personal_account }}
+                <label for="form_pa">Лицевой счет (10 символов)</label>
+            </div>
+            <div class="form-floating mb-4">
+                {{ form.cold_watter_supply }}
+                <label for="form_cws">Холодное в/c</label>
+            </div>
+            <div class="form-floating mb-4">
+                {{ form.hot_watter_supply }}
+                <label for="form_hws">Горячее в/c</label>
+            </div>
+            <div class="form-floating mb-4">
+                {{ form.gas_supply }}
+                <label for="form_gs">Газоснабжение</label>
+            </div>
+            <div class="form-floating mb-2">
+                {{ form.electricity_supply }}
+                <label for="form_es">Электроснабжение</label>
+            </div>
+
+            {% if messages %}
+
+            {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+            {% else %}
+            <div class="alert alert-danger" style="text-align: center;">{{ message }}</div>
+            {% endif %}
+            {% endfor %}
+
+            {% endif %}
+            <button class="btn btn-primary mt-3 w-50" style="margin: 0 auto;">Отправить</button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

@@ -25,9 +25,11 @@
             <li>
               <a href="http://127.0.0.1:8000/#about_company">О компании</a>
             </li>
+            {% if user.is_superuser == 1 %}
             <li>
-              <a href="/disclosure/">Раскрытие информации</a>
+              <a href="{% url 'messages' %}">Сообщения</a>
             </li>
+            {% endif %}
             <li>
               {% if user.is_authenticated %}
               <a href="{% url 'complaints' %}">Жалобы</a>
@@ -45,6 +47,7 @@
         </nav>
 
         {% if user.is_authenticated %}
+        <div class="lead">{{ user.username }}</div>
         <form method="post" action="{% url 'logout' %}">
           {% csrf_token %}
           <button type="submit" class="btn btn-danger">Выйти</button>
@@ -87,10 +90,9 @@
       </ul>
       {% if user.is_authenticated %}
       <div class="main-options">
-        <a href="#">Передать показания счётчика</a>
-        <a href="{% url 'add_complaints' user.id %}"> <span style="position: absolute; color:transparent;">{{ user }}</span>
-          Отправить жалобу </a>
-        <a href="#">Написать управляющему</a>
+        <a href="{% url 'meter_readings' %}">Передать показания счётчика</a>
+        <a href="{% url 'add_complaints' %}">Отправить жалобу </a>
+        <a href="{% url 'send_message' %}">Написать управляющему</a>
       </div>
       {% else %}
       <div class="main-options">
@@ -132,18 +134,16 @@
     <div class="section__news">
       <a href="{% url 'news' %}" class="section__news__title">Новости</a>
       <ul class="section__news">
+        {% if latest_news %}
+        {% for publication in latest_news %}
         <li class="news__item">
-          <p class="date">12 января 2018</p>
-          <p class="content">Открыта запись на заселение дома по адресу: г. Москва, Варшавское шоссе, д. 141, к. 9</p>
+          <p class="date">{{ publication.publish_date }}</p>
+          <p class="content">{{ publication.title }}</p>
         </li>
-        <li class="news__item">
-          <p class="date">13 декабря 2017</p>
-          <p class="content">Важность квалифицированной эксплуатации систем противопожарной безопасности</p>
-        </li>
-        <li class="news__item">
-          <p class="date">8 ноября 2017</p>
-          <p class="content">Начинается запись на заселение дома по адресу: д. Боброво, ул. Лесная, д. 18</p>
-        </li>
+        {% endfor %}
+        {% else %}
+        <div class="alert alert-info w-25">Новости отсутствуют</div>
+        {% endif %}
       </ul>
     </div>
   </section>
