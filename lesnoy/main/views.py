@@ -85,7 +85,7 @@ def send_message_view(request):
             )
             message.save()
             messages.success(request, "Сообщение успешно отправлено")
-            return redirect(f"./{request.user_id}")
+            return redirect(f".")
         messages.error(request, "Сообщение не отправлено. Проверьте правильность заполнения полей")
     else:
         form = SendMessageForm()

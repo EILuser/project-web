@@ -11,10 +11,12 @@
             <div class="form-floating mb-4">
                 {{ form.title }}
                 <label for="form_title">Тема сообщения</label>
+                <div id="title_errors"></div>
             </div>
             <div class="form-floating mb-2">
                 {{ form.text }}
                 <label for="form_text">Текст сообщения</label>
+                <div id="text_errors"></div>
             </div>
 
             {% if messages %}
@@ -29,9 +31,10 @@
 
             {% endif %}
 
-            <button class="btn btn-primary mt-3 w-50" style="margin: 0 auto;">Отправить</button>
+            <button onclick="messagesValidator(event);" class="btn btn-primary mt-3 w-50" style="margin: 0 auto;">Отправить</button>
         </form>
     </div>
 </section>
-
+{% load static %}
+<script type="text/javascript" src="{% static 'js/validation.js' %}"></script>
 {% endblock %}

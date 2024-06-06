@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from .models import Complaints
+from django.core.validators import RegexValidator
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
@@ -11,11 +11,27 @@ class UserRegistrationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs.update({"class": "form-control", "id": f"form_{field}"})
+        for field in self.fields.items():
+            field[1].widget.attrs.update({"class": "form-control", "id": f"form_{field[0]}"})
 
-    first_name = forms.CharField(max_length=20)
-    last_name = forms.CharField(max_length=20)
+    first_name = forms.CharField(
+        max_length=20,
+        validators= [
+            RegexValidator(
+                regex=r"^[А-Яа-я]{3,20}$",
+                message="Введите корректное имя"
+            )
+        ]
+    )
+    last_name = forms.CharField(
+        max_length=20,
+        validators= [
+            RegexValidator(
+                regex=r"^[А-Яа-я]{3,20}$",
+                message="Введите корректную фамилию"
+            )
+        ]
+    )
     email = forms.EmailField()
 
 class UserAuthentificationForm(AuthenticationForm):
@@ -24,14 +40,14 @@ class UserAuthentificationForm(AuthenticationForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs.update({"class": "form-control", "id": f"form_{field}"})
+        for field in self.fields.items():
+            field[1].widget.attrs.update({"class": "form-control", "id": f"form_{field[0]}"})
 
 
 class ComplaintForm(forms.Form):
     title = forms.CharField(
         max_length=40,
-        widget=forms.TextInput(attrs={"class": "form-control", "id": "form_title"})
+        widget=forms.TextInput(attrs={"class": "form-control", "id": "form_title"}),
     )
     house_address = forms.CharField(
         max_length=40,
@@ -46,13 +62,31 @@ class ComplaintForm(forms.Form):
         })
     )
 
+    # Валидация формы
     def clean_title(self):
         data = self.cleaned_data["title"]
 
-        if len(data) > 3:
+        if len(data) > 40:
             raise ValidationError("Количество символов превышает максимальное (40)")
         
         return data
+    
+    def clean_house_address(self):
+        data = self.cleaned_data["house_address"]
+
+        if len(data) > 40:
+            raise ValidationError("Количество символов превышает максимальное (40)")
+        
+        return data
+    
+    def clean_text(self):
+        data = self.cleaned_data["text"]
+
+        if len(data) > 1000:
+            raise ValidationError("Количество символов превышает максимальное (1000)")
+        
+        return data
+
 
 class SendMessageForm(forms.Form):
     title = forms.CharField(

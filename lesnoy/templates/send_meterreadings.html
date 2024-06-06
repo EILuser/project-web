@@ -10,23 +10,28 @@
 
             <div class="form-floating mb-4">
                 {{ form.personal_account }}
-                <label for="form_pa">Лицевой счет (10 символов)</label>
+                <label for="form_pa">Номер лицевого счета</label>
+                <div id="pa_errors"></div>
             </div>
             <div class="form-floating mb-4">
                 {{ form.cold_watter_supply }}
                 <label for="form_cws">Холодное в/c</label>
+                <div id="cws_errors"></div>
             </div>
             <div class="form-floating mb-4">
                 {{ form.hot_watter_supply }}
                 <label for="form_hws">Горячее в/c</label>
+                <div id="hws_errors"></div>
             </div>
             <div class="form-floating mb-4">
                 {{ form.gas_supply }}
                 <label for="form_gs">Газоснабжение</label>
+                <div id="gs_errors"></div>
             </div>
             <div class="form-floating mb-2">
                 {{ form.electricity_supply }}
                 <label for="form_es">Электроснабжение</label>
+                <div id="es_errors"></div>
             </div>
 
             {% if messages %}
@@ -40,9 +45,10 @@
             {% endfor %}
 
             {% endif %}
-            <button class="btn btn-primary mt-3 w-50" style="margin: 0 auto;">Отправить</button>
+            <button onclick="MeterReadingsValidator(event);" class="btn btn-primary mt-3 w-50" style="margin: 0 auto;">Отправить</button>
         </form>
     </div>
 </section>
-
+{% load static %}
+<script src="{% static 'js/validation.js' %}"></script>
 {% endblock %}
