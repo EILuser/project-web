@@ -3,12 +3,25 @@ from .forms import UserRegistrationForm, UserAuthentificationForm, SendMessageFo
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from . import models
-from django.contrib.auth.models import User
 from datetime import datetime
 
 def main_view(request):
     news_list = models.News.objects.all().order_by("-publish_date")[:3]
-    return render(request, "index.html", {"latest_news": news_list})
+    unread_messages_count = 0
+
+    if request.user.id is not None:
+        if request.user.is_superuser:
+            unread_messages_count = models.Messages.objects.filter(
+                reply_date__isnull=True,
+                is_read=False
+            ).count()
+        else:
+            unread_messages_count = models.Messages.objects.filter(
+                user_id=request.user.id,
+                reply_date__isnull=False,
+                is_read=False).count()
+    
+    return render(request, "index.html", {"latest_news": news_list, "unread_messages_count": unread_messages_count})
 
 def all_complaints_view(request):
     complaints = models.Complaints.objects.all().order_by("-post_date")
@@ -22,9 +35,13 @@ def news_view(request):
     news_list = models.News.objects.all().order_by("-publish_date")
     return render(request, "news.html", {"news": news_list})
 
-def messages_view(request):
-    messages = models.Messages.objects.all().order_by("-send_date")
-    return render(request, "messages.html", {"messages": messages})
+def admin_messages_view(request):
+    messages = models.Messages.objects.filter(reply_text="Нет ответа").order_by("-send_date")
+    return render(request, "admin_messages.html", {"messages_list": messages})
+
+def user_messages_view(request):
+    messages = models.Messages.objects.filter(reply_date__isnull=False, user_id=request.user.id).order_by("-reply_date")
+    return render(request, "user_messages.html", {"messages_list": messages})
 
 def login_view(request):
     if request.method == "POST":
@@ -76,9 +93,11 @@ def send_message_view(request):
     if request.method == "POST":
         form = SendMessageForm(request.POST)
         if form.is_valid():
+            send_date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            send_date = datetime.strptime(send_date_string, "%Y-%m-%d %H:%M:%S")
             message = models.Messages(
                 user_id=request.user.id,
-                send_date=datetime.now().date(),
+                send_date=send_date,
                 title=form.cleaned_data["title"],
                 question_text=form.cleaned_data["text"],
                 is_read=False
@@ -98,9 +117,6 @@ def make_read_view(request, message_id):
 def delete_message_view(request, message_id):
     models.Messages.objects.filter(id=message_id).delete()
     return redirect("..")
-
-def send_reply_view(request):
-    pass
 
 def send_meter_readings_view(request):
     if request.method == "POST":
@@ -122,3 +138,21 @@ def send_meter_readings_view(request):
     else:
         form = SendMeterReadingsForm()
     return render(request, "send_meterreadings.html", {"form": form})
+
+def reply_view(request, message_id):
+    message = models.Messages.objects.filter(id=message_id)
+    if request.method == "POST":
+        form = SendReplyForm(request.POST)
+        if form.is_valid():
+            reply_date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            reply_date = datetime.strptime(reply_date_string, "%Y-%m-%d %H:%M:%S")
+            message.update(
+                reply_text=form.cleaned_data["text"],
+                is_read=False,
+                reply_date=reply_date
+            )
+            messages.success(request, "Ответ отправлен")
+            return redirect("..")
+    else:
+        form = SendReplyForm()
+    return render(request, "reply.html", {"messages_list": message, "form": form})

@@ -1,0 +1,29 @@
+{% extends "admin_messages.html" %}
+
+{% block backbutton %}
+<a href="{% url 'admin_messages' %}" class="btn btn-primary position-relative top-0 start-0">Вернуться</a>
+{% endblock %}
+
+{% block reply %}
+{% for message in messages_list %}
+<div class="card text-center w-75 mb-3" style="margin: 0 auto;">
+    <div class="card-header text-center d-flex justify-content-between align-items-center">
+        <div class="fs-4 fw-bold">{{ message.title }}</div>
+        <div>кому: <span class="lead">{{ message.user.username }}</span></div>
+    </div>
+    <div class="card-body">
+        <p class="card-text nav-tabs mb-3" style="text-align: justify;">{{ message.question_text }}</p>
+        <form method="post" class="container d-flex flex-column mt-3">
+            {% csrf_token %}
+            
+            <div class="form-floating">
+                {{ form.text }}
+                <label for="form_text">Текст сообщения</label>
+            </div>
+            <small class="form-text  mb-2 text-danger">{{ form.text.errors }}</small>
+            <button class="btn btn-primary w-25 mt-3" style="margin: 0 auto;">Отправить</button>
+        </form>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,10 +1,14 @@
 {% extends "index.html" %}
 
+{% block messages %}
+
+{% endblock %}
+
 {% block content %}
 
 <section class="pt-3 pb-3">
     <div class="container d-flex flex-column align-items-center">
-        <h1 class="col mb-5">Форма отправки сообщения управляющему</h1>
+        <h1 class="col mb-5">Форма отправки сообщения</h1>
         <form class="col d-flex flex-column w-50" method="post">
             {% csrf_token %}
 

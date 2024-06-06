@@ -112,6 +112,14 @@ class SendReplyForm(forms.Form):
         })
     )
 
+    def clean_text(self):
+        data = self.cleaned_data["text"]
+
+        if len(data) > 1000:
+            raise ValidationError("Превышен лимит в 1000 символов")
+
+        return data
+
 class SendMeterReadingsForm(forms.Form):
     personal_account = forms.CharField(
         max_length=10,

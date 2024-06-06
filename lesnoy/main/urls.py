@@ -8,9 +8,15 @@ complaints_patterns = [
     path('my_complaints/', views.my_complaints_view, name="my_complaints"),
 ]
 
-messages_patterns = [
-    path('', views.messages_view, name="messages"),
+admin_messages_patterns = [
+    path('', views.admin_messages_view, name="admin_messages"),
     path('make_read/<int:message_id>', views.make_read_view, name="make_read"),
+    path('delete_message/<int:message_id>', views.delete_message_view, name="delete_message"),
+    path('reply/<int:message_id>', views.reply_view, name="reply"),
+]
+
+user_messages_patterns = [
+    path('', views.user_messages_view, name="user_messages"),
     path('delete_message/<int:message_id>', views.delete_message_view, name="delete_message"),
 ]
 
@@ -23,6 +29,7 @@ urlpatterns = [
     path('complaints/', include(complaints_patterns)),
     path('news/', views.news_view, name="news"),
     path('send_message/', views.send_message_view, name="send_message"),
-    path('messages/', include(messages_patterns)),
+    path('admin_messages/', include(admin_messages_patterns)),
     path('meter_readings/', views.send_meter_readings_view, name="meter_readings"),
+    path('user_messages/', include(user_messages_patterns)),
 ]
