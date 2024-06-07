@@ -69,7 +69,7 @@ nav {
 }
 
 .authorisation {
-    width: 20%;
+    width: 18%;
     display: flex;
     justify-content: space-between;
 }
@@ -80,24 +80,57 @@ nav {
     margin-bottom: 80px;
     height: 480px;
     width: 90%;
-    /* max-width: 1440px; */
     overflow: hidden;
-    /* left: 50%;
-    margin-left: -720px; */
 }
-
-/* .items {
-    width: 100%;
-    position: relative;
-} */
-
-/* .item {
-    height: 480px;
-    float: left;
-} */
 
 .item__image {
     width: 100%;
+}
+
+/* Animation */
+
+.photo0 {
+    position: relative;
+    z-index: -2;
+}
+
+.photo1 {
+    position: absolute;
+    top:-100%;
+    animation: fromtop 10s linear 5s infinite;
+}
+
+.photo2 {
+    position: absolute;
+    top:-100%;
+    animation: fromtop 10s linear infinite;
+}
+
+@keyframes fromtop {
+    0% {
+        top: -100%;
+    }
+    4% {
+        top: 0;
+    }
+    5% {
+        top: -20px;
+    }
+    6% {
+        top: 0;
+    } 
+    49.99999% {
+        top: 0;
+        z-index: 0;
+    }   
+    50% {
+        top: 0;
+        z-index: -1;
+    }  
+    100% {
+        top: 0;
+        z-index: -1;      
+    }  
 }
 
 .main-options {
@@ -111,7 +144,6 @@ nav {
 }
 
 .main-options a {
-    padding-left: 30px;
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -469,6 +501,10 @@ footer {
 
     .section__content {
         width: 90%;
+    }
+
+    .authorisation {
+        width: 35%;
     }
 }
 
