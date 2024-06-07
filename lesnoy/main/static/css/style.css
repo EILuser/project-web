@@ -31,6 +31,10 @@ ul {
     max-width: 260px
 }
 
+.message__button__adaptation {
+    position: relative;
+}
+
 nav {
     padding: 15px 35px;
     width: 50%;
@@ -38,7 +42,6 @@ nav {
     border-width: 4px;
     border-radius: 6px 6px 6px 0;
     box-sizing: border-box;
-    position: relative;
     border-color: #ffcb3f;
     background-color: #fff;
 }
@@ -278,6 +281,16 @@ footer {
 
 /* Adaptation */
 
+@media screen and (max-width: 1400px) {
+    .main-slider-block {
+        height: 390px;
+    }
+
+    .news__item {
+        width: 24%;
+    }
+}
+
 @media screen and (max-width: 1200px) {
     .main-features li:before {
         top: 5%;
@@ -299,11 +312,15 @@ footer {
     .main-slider-block {
         height: 315px;
     }
+
+    .authorisation {
+        width: 22%;
+    }
 }
 
 @media screen and (max-width: 992px) {
-    .section__title {
-        font-size: 40px;
+    .wrapper {
+        flex-direction: column;
     }
 
     .section__content {
@@ -311,19 +328,15 @@ footer {
     }
 
     .section__content p {
-        font-size: 18px;
+        font-size: 17px;
     }
 
     .section__news {
         width: 80%;
     }
 
-    .date {
-        font-size: 20px;
-    }
-
     .news__item {
-        width: 22%;
+        width: 21%;
         font-size: 16px;
     }
 
@@ -344,10 +357,171 @@ footer {
     footer {
         width: 85%;
     }
+    
+    nav {
+        width: 100%;
+    }
+
+    .username__adaptation {
+        position: absolute;
+        left: 5%;
+        top: 5%;
+    }
+
+    .message__button__adaptation {
+        position: absolute;
+        right: 20%;
+        top: 5%;
+    }
+
+    .exit__button_adaptation {
+        position: absolute;
+        top: 5%;
+        right: 5%;
+    }
+
+    .center {
+        margin-bottom: 20px;
+    }
+
+    .main-slider-block {
+        width: 95%;
+        height: 260px;
+    }
+
+    .main-features {
+        widows: 100%;
+    }
+
+    .main-features li {
+        font-size: 12px;
+    }
+
+    .main-features li:after {
+        left: 18px;
+    }
+
+    .box {
+        margin-top: 20px;
+    }
+
+    .authorisation {
+        position: absolute;
+        width: 30%;
+        top: 5%;
+        left: 5%;
+    }
+
 }
 
 @media screen and (max-width: 768px) {
-    .wrapper {
+    .main-slider-block {
+        width: 100%;
+        height: 210px;
+    }
+
+    .main-options a {
+        font-size: 15px;
+    }
+
+    .main-features {
+        display: flex;
         flex-direction: column;
+        margin-top: 0;
+    }
+
+    .main-features li {
+        text-align: center;
+        padding: 40px 20px 3px;
+        font-size: 16px;
+    }
+
+    .main-features li:after {
+        top: -5%;
+        left: 45px;
+    }
+
+    .section__title {
+        font-size: 28px;
+    }
+
+    .section__news {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .section__news__list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .news__item {
+        width: 60%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .date {
+        text-align: center;
+    }
+
+    .section__content {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .authorisation {
+        position: relative;
+        width: 60%;
+        top: 0;
+        left: 0;
+        margin-top: 30px;
+    }
+
+    .message__button__adaptation {
+        position: relative;
+        right: 0;
+        top: 0;
+        margin-bottom: 10px;
+    }
+
+    .exit__button_adaptation {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-bottom: 10px;
+    }
+
+    .username__adaptation {
+        position: relative;
+        left: 0;
+        top: 0;
+        margin-bottom: 10px;
+    }
+
+    .ul__nav {
+        flex-direction: column;
+    }
+
+    .ul__nav li {
+        margin-bottom: 10px;
+    }
+
+    .main-features li:after {
+        top: -4%;
+        left: 30px;
+    }
+
+    .news__item {
+        width: 80%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .section__title {
+        font-size: 26px;
     }
 }
