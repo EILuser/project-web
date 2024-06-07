@@ -122,7 +122,7 @@ class SendReplyForm(forms.Form):
 
 class SendMeterReadingsForm(forms.Form):
     personal_account = forms.CharField(
-        max_length=10,
+        max_length=9,
         widget=forms.TextInput(attrs={"class": "form-control", "id": "form_pa"})
     )
     cold_watter_supply = forms.IntegerField(

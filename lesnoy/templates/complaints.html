@@ -7,7 +7,7 @@
 {% block content %}
 <section class="pt-5 pb-5">
     <div class="container card-header">
-        <ul class="nav nav-tabs text-center">
+        <ul class="col-12 nav nav-tabs text-center">
             <li class="nav-item">
                 <a class="nav-link active" aria-current="true" href="{% url 'complaints' %}">Все жалобы</a>
             </li>
@@ -18,11 +18,11 @@
     </div>
     <div class="container">
         <h1 class="mb-4 mt-4 text-center">Жалобы</h1>
-        <div class="container shadow-sm p-3 mb-5 bg-white rounded" style="max-height: 1200px; overflow: auto;">
+        <div class="col-12 shadow-sm p-3 mb-5 bg-white rounded" style="max-height: 1200px; overflow: auto;">
             {% if complaints %}
 
             {% for complaint in complaints %}
-            <div class="card w-50 mb-4" style="border-color: #ffcb3f; border-width: 5px; margin: 0 auto;">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-6 card mb-4 m-auto" style="border-color: #ffcb3f; border-width: 5px;">
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ complaint.title }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted text-end">{{ complaint.post_date }}</h6>
@@ -34,7 +34,7 @@
             {% endfor %}
 
             {% else %}
-            <div class="alert alert-info w-50" style="margin: 0 auto;">Жалобы отсутствуют</div>
+            <div class="col-12 col-md-10 col-lg-8 col-xl-6 alert alert-info m-auto text-center">Жалобы отсутствуют</div>
             {% endif %}
         </div>
     </div>

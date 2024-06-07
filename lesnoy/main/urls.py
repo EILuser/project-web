@@ -18,6 +18,7 @@ admin_messages_patterns = [
 user_messages_patterns = [
     path('', views.user_messages_view, name="user_messages"),
     path('delete_message/<int:message_id>', views.delete_message_view, name="delete_message"),
+    path('make_read/<int:message_id>', views.make_read_view, name="make_read"),
 ]
 
 urlpatterns = [
@@ -30,6 +31,6 @@ urlpatterns = [
     path('news/', views.news_view, name="news"),
     path('send_message/', views.send_message_view, name="send_message"),
     path('admin_messages/', include(admin_messages_patterns)),
-    path('meter_readings/', views.send_meter_readings_view, name="meter_readings"),
     path('user_messages/', include(user_messages_patterns)),
+    path('meter_readings/', views.send_meter_readings_view, name="meter_readings"),
 ]

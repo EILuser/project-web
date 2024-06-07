@@ -8,8 +8,8 @@
 
 <section class="pt-3 pb-3">
     <div class="container d-flex flex-column align-items-center">
-        <h1 class="col mb-5">Форма отправки сообщения</h1>
-        <form class="col d-flex flex-column w-50" method="post">
+        <h1 class="mb-3">Форма отправки сообщения</h1>
+        <form class="col-12 col-md-10 col-lg-8 col-xl-6 d-flex flex-column" method="post">
             {% csrf_token %}
 
             <div class="form-floating mb-4">
@@ -27,15 +27,15 @@
 
             {% for message in messages %}
             {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-            <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+            <div class="alert alert-success text-center">{{ message }}</div>
             {% else %}
-            <div class="alert alert-danger" style="text-align: center;">{{ message }}</div>
+            <div class="alert alert-danger text-center">{{ message }}</div>
             {% endif %}
             {% endfor %}
 
             {% endif %}
 
-            <button onclick="messagesValidator(event);" class="btn btn-primary mt-3 w-50" style="margin: 0 auto;">Отправить</button>
+            <button onclick="messagesValidator(event);" class="col-12 col-md-10 col-lg-8 col-xl-5 btn btn-primary mt-3 m-auto">Отправить</button>
         </form>
     </div>
 </section>

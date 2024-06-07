@@ -9,11 +9,11 @@
 <section class="pt-3 pb-3">
     <div class="container">
         <h1 class="mb-4 mt-4 text-center">Сообщения</h1>
-        <div class="container shadow-sm p-3 mb-5 bg-white rounded" style="max-height: 1200px; overflow: auto;">
+        <div class="col-12 shadow-sm p-3 mb-5 bg-white rounded" style="max-height: 1200px; overflow: auto;">
             {% block backbutton %}
             {% if messages %}
             {% for message in messages %}
-            <div class="alert alert-success w-50 mb-5" style="text-align: center; margin: 0 auto;">{{ message }}</div>
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7 alert alert-success mb-5 text-center m-auto">{{ message }}</div>
             {% endfor %}
             {% endif %}
             {% endblock %}
@@ -23,7 +23,7 @@
             {% for message in messages_list %}
             {% if message.reply_date %}
             {% else %}
-            <div class="card text-center w-50 mb-3" style="margin: 0 auto;">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7 card text-center mb-3 m-auto">
                 {% if message.is_read %}
                 <div class="card-header text-start d-flex justify-content-between">
                     <div>Прочитано</div>
@@ -38,7 +38,7 @@
                     <p class="text-end text-muted">от: {{ message.user.username }}</p>
                     <h5 class="card-title nav-tabs pb-2">{{ message.title }}</h5>
                     <p class="card-text" style="text-align: justify;">{{ message.question_text }}</p>
-                    <a href="{% url 'reply' message.id %}" class="btn btn-primary">Ответить</a>
+                    <a href="{% url 'reply' message.id %}" class="col-12 col-lg-8 col-xl-5 btn btn-primary">Ответить</a>
                 </div>
                 <div class="card-footer text-muted">
                     {{ message.send_date }}
@@ -47,7 +47,7 @@
             {% endif %}
             {% endfor %}
             {% else %}
-            <div class="alert alert-info w-25" style="margin: 0 auto;">Сообщения отсутствуют</div>
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7 alert alert-info text-center m-auto">Сообщения отсутствуют</div>
             {% endif %}
             {% endblock %}
         </div>

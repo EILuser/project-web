@@ -9,10 +9,10 @@
 <section class="pt-3 pb-3">
     <div class="container">
         <h1 class="mt-4 mb-4 text-center">Мои сообщения ({{ user.first_name }} {{ user.last_name }})</h1>
-        <div class="container shadow-sm p-3 mb-5 bg-white rounded" style="max-height: 1200px; overflow: auto;">
+        <div class="shadow-sm p-3 mb-5 bg-white rounded" style="max-height: 1200px; overflow: auto;">
             {% if messages_list %}
             {% for message in messages_list %}
-            <div class="card text-center w-50 mb-3" style="margin: 0 auto;">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-6 card text-center mb-3 m-auto">
                 {% if message.is_read %}
                 <div class="card-header text-start d-flex justify-content-between">
                     <div>{{ message.title }}</div>
@@ -24,7 +24,7 @@
                 {% else %}
                 <div class="card-header text-start d-flex justify-content-between text-white" style="background-color: #ffcb3f;">
                     <div>{{ message.title }}</div>
-                    <a href="#" class="text-decoration-none text-white" title="Отметить как прочитанное">Новое сообщение</a>
+                    <a href="{% url 'make_read' message.id %}" class="text-decoration-none text-white" title="Отметить как прочитанное">Новое сообщение</a>
                 </div>
                 {% endif %}
                 <div class="card-body">
@@ -39,7 +39,7 @@
             </div>
             {% endfor %}
             {% else %}
-            <div class="alert alert-info w-25" style="margin: 0 auto;">Сообщения отсутствуют</div>
+            <div class="col-12 col-md-10 col-lg-8 col-xl-6 alert alert-info m-auto">Сообщения отсутствуют</div>
             {% endif %}
         </div>
     </div>

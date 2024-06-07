@@ -57,7 +57,7 @@ class MeterReadings(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     send_date = models.DateField(null= True)
     # Номер лицевого счета
-    personal_account = models.CharField(max_length=10, null=True)
+    personal_account = models.CharField(max_length=9, null=True)
     hot_watter_supply = models.IntegerField(null=True)
     cold_watter_supply = models.IntegerField(null=True)
     gas_supply = models.IntegerField(null=True)
