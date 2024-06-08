@@ -355,6 +355,24 @@ footer {
         flex-direction: column;
     }
 
+    .username__adaptation {
+        position: absolute;
+        left: 5%;
+        top: 5%;
+    }
+
+    .message__button__adaptation {
+        position: absolute;
+        right: 20%;
+        top: 5%;
+    }
+
+    .exit__button__adaptation {
+        position: absolute;
+        top: 5%;
+        right: 5%;
+    }
+
     .section__content {
         width: 80%;
     }
@@ -392,24 +410,6 @@ footer {
     
     nav {
         width: 100%;
-    }
-
-    .username__adaptation {
-        position: absolute;
-        left: 5%;
-        top: 5%;
-    }
-
-    .message__button__adaptation {
-        position: absolute;
-        right: 20%;
-        top: 5%;
-    }
-
-    .exit__button_adaptation {
-        position: absolute;
-        top: 5%;
-        right: 5%;
     }
 
     .center {
