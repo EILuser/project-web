@@ -83,7 +83,7 @@ def add_complaint_view(request):
             )
             complaint.save()
             messages.success(request, "Жалоба отправлена успешно")
-            return redirect(f"./{request.user_id}")
+            return redirect(".")
         messages.error(request, "Отправка формы не удалась. Проверьте правильность заполнения полей")
     else:
         form = ComplaintForm()
@@ -104,7 +104,7 @@ def send_message_view(request):
             )
             message.save()
             messages.success(request, "Сообщение успешно отправлено")
-            return redirect(f".")
+            return redirect(".")
         messages.error(request, "Сообщение не отправлено. Проверьте правильность заполнения полей")
     else:
         form = SendMessageForm()
