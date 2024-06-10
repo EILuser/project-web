@@ -10,8 +10,8 @@ complaints_patterns = [
 
 admin_messages_patterns = [
     path('', views.admin_messages_view, name="admin_messages"),
-    path('make_read/<int:message_id>', views.make_read_view, name="make_read"),
-    path('delete_message/<int:message_id>', views.delete_message_view, name="delete_message"),
+    path('admin_make_read/<int:message_id>', views.make_read_view, name="admin_make_read"),
+    path('admin_delete_message/<int:message_id>', views.delete_message_view, name="admin_delete_message"),
     path('reply/<int:message_id>', views.reply_view, name="reply"),
 ]
 

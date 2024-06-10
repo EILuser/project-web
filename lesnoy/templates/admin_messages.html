@@ -27,11 +27,11 @@
                 {% if message.is_read %}
                 <div class="card-header text-start d-flex justify-content-between">
                     <div>Прочитано</div>
-                    <a href="{% url 'delete_message' message.id %}" class="text-danger">Удалить</a>
+                    <a href="{% url 'admin_delete_message' message.id %}" class="text-danger">Удалить</a>
                 </div>
                 {% else %}
                 <div class="card-header text-start text-white" style="background-color: #ffcb3f;">
-                    <a href="{% url 'make_read' message.id %}" title="Отметить как прочитанное" class="text-white text-decoration-none">Новое сообщение</a>
+                    <a href="{% url 'admin_make_read' message.id %}" title="Отметить как прочитанное" class="text-white text-decoration-none">Новое сообщение</a>
                 </div>
                 {% endif %}
                 <div class="card-body">

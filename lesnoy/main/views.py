@@ -118,6 +118,7 @@ def delete_message_view(request, message_id):
     models.Messages.objects.filter(id=message_id).delete()
     return redirect("..")
 
+
 def send_meter_readings_view(request):
     if request.method == "POST":
         form = SendMeterReadingsForm(request.POST)

@@ -32,9 +32,9 @@
                 {% if messages %}
                 {% for message in messages %}
                 {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                <div class="alert alert-danger mt-2" style="text-align: center;">{{ message }}</div>
+                <div class="alert alert-danger mt-2 text-center">{{ message }}</div>
                 {% else %}
-                <div class="alert alert-success mt-2" style="text-align: center;">{{ message }}</div>
+                <div class="alert alert-success mt-2 text-center">{{ message }}</div>
                 {% endif %}
                 {% endfor %}
                 {% else %}
